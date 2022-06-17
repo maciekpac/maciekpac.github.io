@@ -308,9 +308,9 @@ SimilaritySearch
 </div>
 <div class="entry-content mt-0">
 <p>From a very high-level overview, computing solves problems. These problems, even though different and individual, are sometimes somehow related. A new algorithmic challenge can usually be solved by bringing it down to a well-defined problem with an existing solution. Today, we will be talking about one of such universal solutions - similarity search, which has found its application in various areas of life, from search engines that tell us what we want to find, through recommendation engines that tell us what to watch, where to eat and what to buy, all the way to data science that provides valuable input to business decisions.</p>
-<h3 id=similarity-search---what-it-is>Similarity Search - what it is</h3>
+<h3 id=similarity-search---what-is-it>Similarity Search - what is it?</h3>
 <p>Vector similarity search is a class of problems in which, given a query vector, a set of vectors and a metric (instruction how to measure distance), we need to retrieve the most similar vector to the query vector from the set. By similar, I mean - the one that has the shortest distance to the first vector in the given metrics.</p>
-<h3 id=why-we-need-it>Why we need it</h3>
+<h3 id=why-do-we-need-it>Why do we need it?</h3>
 <p>We&rsquo;ve already defined what the class of problems is and what the areas of application are, but how do they relate to each other? The answer is, we can use vectors to represent things. A vector can be used to represent someone&rsquo;s social network profile, a word, an item in an online shop, an online article, a photo or virtually anything else we can think of. Also, the distance between two vectors, in general case, is not constraint to some particular metrics, e.g. euclidean (the one we use to compute distance in the real world). If we come up with an idea on how to measure a distance between a donkey and the sound of scratching a blackboard, it&rsquo;s good enough for the algorithm. And what about finding similar things? We often look for similar items in online shops, similar movies to the ones we watched, search for similar food&mldr; Nonetheless, it would be a huge underestimation to say that similarity search can only be applied to areas where we directly search for similar things; it constitutes a building block for many other mathematical problems, with many more real-life applications.</p>
 <p>I think it&rsquo;s clearly visible that this solution is important and has a vast array of different applications.</p>
 <h3 id=computational-complexity-at-scale>Computational complexity at scale</h3>
@@ -337,7 +337,7 @@ SimilaritySearch
 </ol>
 <p>As I&rsquo;ve already mentioned, this is an approximate solution - the node that we found using this greedy approach might not be the nearest neighbor but, oftentimes, this is not really that much of a problem.</p>
 <p>There are other questions that might appear - what about the graph structure? How many layers should it have? How many nodes should each layer contain? They are very important, as the exact values will impact the trade-off between performance and accuracy, but the topic of graph optimization lies outside of the scope of this article.</p>
-<h3 id=why-optane-is-a-great-fit>Why Optane is a great fit</h3>
+<h3 id=why-is-optane-a-great-fit>Why is Optane a great fit?</h3>
 <p>We now know how to retrieve the vectors of interest in logarithmic time, so wouldn&rsquo;t this algorithm work well, even without Optane? The answer is, it would, but we can use Optane products to lower the cost even further.</p>
 <p>As we&rsquo;ve already mentioned, we have a layered graph that we have to traverse. We can make a few observations:</p>
 <ul>
@@ -346,7 +346,7 @@ SimilaritySearch
 <li>given two layers - top and bottom, the nodes in the top one would have higher access frequency than the ones below.</li>
 </ul>
 <p><img src=/images/posts/hnsw_dram_pmem.png alt="An illustration of sample HNSW layers and their split between DRAM-PMEM" title="Sample layers and their split between DRAM-PMEM"></p>
-<p>In short, all the nodes are already grouped by their access frequency. As you might have guessed, storing the not-so-frequently accessed nodes on a cheaper medium with higher latency would not hurt the performance that much, while giving the most performant memory to the top layers can give us a significant performance boost. This is where the Optane technology comes in - as a byte-addressable, sweet spot between destined for the top layers DRAM and slow SSD-based storage.</p>
+<p>In short, all the nodes are already grouped by their access frequency. As you might have guessed, storing the not-so-frequently accessed nodes on a cheaper medium with higher latency would not hurt the performance that much, while giving the most performant memory to the top layers can give us a significant performance boost. This is where the Optane technology comes in - a byte-addressable, sweet spot between destined for the top layers DRAM and slow SSD-based storage.</p>
 <p>Moreover, from the developer point of view, the accesses to nodes is virtually random; in such case, it&rsquo;s not just the higher bandwidth and lower latency that gives us an edge over SSDs, but also the byte-addressability and smaller overhead of fetching small chunks of memory.</p>
 <p>Another great advantage of this solution is the consistency of lookup time - each lookup needs to traverse through both, DRAM and PMEM in rather consistent proportions, which is much better than having random buffered/unbuffered SSD accesses.</p>
 <p>This is the approach taken by the University of California, Merced and Microsoft Research in <a href=https://proceedings.neurips.cc/paper/2020/file/788d986905533aba051261497ecffcbb-Paper.pdf>HM-ANN: Efficient Billion-Point Nearest Neighbor
@@ -356,13 +356,14 @@ Search on Heterogeneous Memory</a>. In that particular case, only the elements s
 <h3 id=is-hnsw-the-state-of-the-art-solution>Is HNSW the state-of-the-art solution?</h3>
 <p>The algorithm was used to present a concept behind graph-based similarity search and the opportunities for Optane that come with it, so describing state-of-the-art solution was not the goal of this article. The research in this area is still in progress, especially given a variety of hardware that can be leveraged to increase throughput or lower TCO.</p>
 <p>Also, the topic of this article was not to present a particular PMEM-enabled implementation of HNSW or any other algorithm, but rather to show how the properties of PMEM can be leveraged. We will be happy to describe a particular implementation once we have an official, open-source library destined for PMEM in particular.</p>
-<p>What is noteworthy, HNSW is not the only algorithm adapted to work with heterogeneous memory. Other algorithms, such as <a href=https://proceedings.neurips.cc/paper/2019/file/09853c7fb1d3f8ee67a61b6bf4a7f8e6-Paper.pdf>DiskANN</a> or <a href=https://proceedings.neurips.cc/paper/2021/file/299dc35e747eb77177d9cea10a802da2-Paper.pdf>SPANN</a>, take slightly different approaches to the problem and leverage slow memory tier differently. The former compresses vectors and keeps them in DRAM, while the graph and full vectors in are stored in slow memory. The latter clusters vectors and holds centroids in DRAM and uses SSD storage to keep full posting lists. It shows that heterogeneous memory, in general, is the key to optimizing costs in similarity search.</p>
+<p>What is noteworthy, HNSW is not the only algorithm adapted to work with heterogeneous memory. Other algorithms, such as <a href=https://proceedings.neurips.cc/paper/2019/file/09853c7fb1d3f8ee67a61b6bf4a7f8e6-Paper.pdf>DiskANN</a> or <a href=https://proceedings.neurips.cc/paper/2021/file/299dc35e747eb77177d9cea10a802da2-Paper.pdf>SPANN</a>, take slightly different approaches to the problem and leverage heterogeneity differently. The former compresses vectors and keeps them in DRAM, while the graph and full vectors are stored in a slow memory tier. The latter clusters vectors and holds centroids in DRAM and uses SSD storage to keep full posting lists. It shows that heterogeneous memory, in general, is the key to optimizing costs in similarity search.</p>
 <h3 id=billion-scale-approximate-nearest-neighbor-search-challenge>Billion-Scale Approximate Nearest Neighbor Search Challenge</h3>
 <p>As similarity search is a crucial area of research for numerous practical applications, <a href=https://big-ann-benchmarks.com/>Billion-Scale Approximate Nearest Neighbor Search Challenge</a> was organized as a part of <a href=https://neurips.cc/Conferences/2021/CompetitionTrack>NeurIPS 2021 Competition Track</a>. Intel, with its OptaNNE GraphANN solution, was announced as <a href=https://arxiv.org/pdf/2205.03763.pdf>a co-winner of the track 3</a> of the competition. The solution encompassed both, graph-based software and PMEM hardware. Intel&rsquo;s solution performed especially well in the TCO category - total cost to horizontally replicate a system to serve 100 000 requests per second, with the cost being almost 20 times lower than that of the second-best solution, CUANNS IVFPQ, for the BIGANN and DEEP data sets (DEEP: 16.1 vs 303.9, BIGANN: 15.4 vs 304.2).</p>
+<style>table,th,td{border:1px solid;padding-right:10pt;padding-left:10pt}</style>
 <table>
 <thead>
 <tr>
-<th>Algorithm</th>
+<th style=text-align:left>Algorithm</th>
 <th style=text-align:right>DEEP</th>
 <th style=text-align:right>BIGANN</th>
 <th style=text-align:right>MS Turing</th>
@@ -373,7 +374,7 @@ Search on Heterogeneous Memory</a>. In that particular case, only the elements s
 </thead>
 <tbody>
 <tr>
-<td>baseline</td>
+<td style=text-align:left>baseline</td>
 <td style=text-align:right>545.6</td>
 <td style=text-align:right>737.9</td>
 <td style=text-align:right>853.9</td>
@@ -382,7 +383,7 @@ Search on Heterogeneous Memory</a>. In that particular case, only the elements s
 <td style=text-align:right>428.1</td>
 </tr>
 <tr>
-<td>OptaNNE GraphNN</td>
+<td style=text-align:left>OptaNNE GraphANN</td>
 <td style=text-align:right>16.1</td>
 <td style=text-align:right>15.4</td>
 <td style=text-align:right>16.3</td>
@@ -391,7 +392,7 @@ Search on Heterogeneous Memory</a>. In that particular case, only the elements s
 <td style=text-align:right>-</td>
 </tr>
 <tr>
-<td>CUANNS IVFPQ</td>
+<td style=text-align:left>CUANNS IVFPQ</td>
 <td style=text-align:right>303.9</td>
 <td style=text-align:right>304.2</td>
 <td style=text-align:right>153.2</td>
@@ -400,7 +401,7 @@ Search on Heterogeneous Memory</a>. In that particular case, only the elements s
 <td style=text-align:right>-</td>
 </tr>
 <tr>
-<td>CUANNS MultiGPU</td>
+<td style=text-align:left>CUANNS MultiGPU</td>
 <td style=text-align:right>569.1</td>
 <td style=text-align:right>569.2</td>
 <td style=text-align:right>286.9</td>
@@ -410,18 +411,15 @@ Search on Heterogeneous Memory</a>. In that particular case, only the elements s
 </tr>
 </tbody>
 </table>
-<p>Total cost to horizontally replicate a system to serve 100 000 queries per second</p>
+<blockquote>
+<p><em>Total cost to horizontally replicate a system to serve 100 000 queries per second</em></p>
+</blockquote>
 <p>Please consult <a href=https://arxiv.org/pdf/2205.03763.pdf>the official results</a> for the exact figures for all categories and data sets, as only selected results that showed the benefits of PMEM were presented here.</p>
 <h4 id=is-the-optanne-graphann-library-open-source>Is the OptaNNE GraphANN library open-source?</h4>
 <p>As of June 13, 2022, it is not. We will keep you informed about any possible updates.</p>
 <div class="tagcloud clearfix bottommargin">
-<a href=https://pmem.io/tags/hnsw>HNSW</a>
+<a href=https://pmem.io/tags/pmem>pmem</a>
 <a href=https://pmem.io/tags/similarity-search>similarity search</a>
-<a href=https://pmem.io/tags/neurips>NeurIPS</a>
-<a href=https://pmem.io/tags/optanne-graphnn>OptaNNE GraphNN</a>
-<a href=https://pmem.io/tags/diskann>DiskANN</a>
-<a href=https://pmem.io/tags/spann>SPANN</a>
-<a href=https://pmem.io/tags/neurips>NeurIPS</a>
 </div>
 <div class=clear></div>
 <div class="si-share border-0 d-flex justify-content-between align-items-center">
@@ -469,8 +467,8 @@ Search on Heterogeneous Memory</a>. In that particular case, only the elements s
 <div class="widget clearfix">
 <h4>Tag Cloud</h4>
 <div class=tagcloud>
-<a href=/tags/persistent-memory class=block role=button>persistent-memory</a>
 <a href=/tags/pmem class=block role=button>pmem</a>
+<a href=/tags/persistent-memory class=block role=button>persistent-memory</a>
 <a href=/tags/ndctl class=block role=button>ndctl</a>
 <a href=/tags/daxctl class=block role=button>daxctl</a>
 <a href=/tags/pmdk class=block role=button>pmdk</a>
