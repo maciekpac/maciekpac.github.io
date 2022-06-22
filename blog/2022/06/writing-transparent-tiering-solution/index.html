@@ -453,7 +453,8 @@ conscious of their existence can usually help the compiler optimize the code
 better and make better programs, as this is the case here.</p>
 <p>A sample statistic that we can use is
 <a href=https://www.kernel.org/doc/html/latest/accounting/psi.html>Pressure Stall Information</a>
-(PSI). The three special files located under <code>/proc/pressure``: </code>cpu<code>, </code>io<code>and</code>memory``` show how long a given process was stalled due to
+(PSI). The three special files located under <code>/proc/pressure</code>: <code>cpu</code>,
+<code>io</code> and <code>memory</code> show how long a given process was stalled due to
 each of the resources in a given time window. We can incorporate this statistic
 to give more lower latency memory to a process that really needs it - the one
 that is stalled due to IO, instead of the one that is bottlenecked on the CPU.
