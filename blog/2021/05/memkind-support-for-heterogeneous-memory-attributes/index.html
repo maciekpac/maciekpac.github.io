@@ -341,7 +341,7 @@ doesn&rsquo;t have to contain both memory (typically DRAM) and a processing unit
 For example, we can have a memory-only NUMA Node (hot-plugged memory device), which cannot generate memory requests and contains only memory.</p>
 <p>Today&rsquo;s hardware used in platforms is constantly evolving with a broad spectrum of device changes on each level: previously mentioned
 <code>processing units</code>, come in the form of, e.g., CPU, GPU, or FPGA. The <code>storage class devices</code> in the form of, e.g., HDD or <a href=https://www.intel.com/content/www/us/en/products/memory-storage/solid-state-drives/data-center-ssds/optane-dc-ssd-series.html>SSD</a>.
-Finally, the <code>memory class devices</code> are provided by physical mediums like DRAM, PMEM, or <a href=https://www.intel.com/content/www/us/en/developer/articles/technical/multi-channel-dram-mcdram-and-high-bandwidth-memory-hbm.html>MCDRAM</a>.</p>
+Finally, the <code>memory class devices</code> are provided by physical mediums like DRAM, PMEM, or <a href=https://software.intel.com/content/www/us/en/develop/blogs/an-intro-to-mcdram-high-bandwidth-memory-on-knights-landing.html>MCDRAM</a>.</p>
 <p>This post focuses on the last aspect of mentioned varieties - on <strong>heterogeneous memory</strong>.</p>
 <figure class=image>
 <img src=/images/posts/heterogeneous_architecture.png alt="PMEM KMEM-DAX">
@@ -596,8 +596,8 @@ The support for them is available in the Linux Kernel 5.5.</p>
 <div class="widget clearfix">
 <h4>Tag Cloud</h4>
 <div class=tagcloud>
-<a href=/tags/pmem class=block role=button>pmem</a>
 <a href=/tags/persistent-memory class=block role=button>persistent-memory</a>
+<a href=/tags/pmem class=block role=button>pmem</a>
 <a href=/tags/ndctl class=block role=button>ndctl</a>
 <a href=/tags/daxctl class=block role=button>daxctl</a>
 <a href=/tags/pmdk class=block role=button>pmdk</a>
@@ -605,20 +605,16 @@ The support for them is available in the Linux Kernel 5.5.</p>
 <a href=/tags/dax class=block role=button>dax</a>
 <a href=/tags/install class=block role=button>install</a>
 <a href=/tags/setup class=block role=button>setup</a>
-<a href=/tags/async class=block role=button>async</a>
-<a href=/tags/asynchronous class=block role=button>asynchronous</a>
-<a href=/tags/concurrency class=block role=button>concurrency</a>
-<a href=/tags/dml class=block role=button>dml</a>
-<a href=/tags/dsa class=block role=button>dsa</a>
 <a href=/tags/faq class=block role=button>faq</a>
 <a href=/tags/imdb class=block role=button>imdb</a>
-<a href=/tags/miniasync class=block role=button>miniasync</a>
-<a href=/tags/pmem2 class=block role=button>pmem2</a>
 <a href=/tags/sanitize class=block role=button>sanitize</a>
 <a href=/tags/secure-erase class=block role=button>secure-erase</a>
 <a href=/tags/sql class=block role=button>sql</a>
 <a href=/tags/2019 class=block role=button>2019</a>
+<a href=/tags/async class=block role=button>async</a>
+<a href=/tags/asynchronous class=block role=button>asynchronous</a>
 <a href=/tags/blogs class=block role=button>blogs</a>
+<a href=/tags/concurrency class=block role=button>concurrency</a>
 <a href=/tags/crash class=block role=button>crash</a>
 <a href=/tags/create class=block role=button>create</a>
 <a href=/tags/cxl class=block role=button>cxl</a>
@@ -626,6 +622,10 @@ The support for them is available in the Linux Kernel 5.5.</p>
 <a href=/tags/destroy class=block role=button>destroy</a>
 <a href=/tags/developer class=block role=button>developer</a>
 <a href=/tags/direct-access class=block role=button>direct-access</a>
+<a href=/tags/dml class=block role=button>dml</a>
+<a href=/tags/dsa class=block role=button>dsa</a>
+<a href=/tags/emulate class=block role=button>emulate</a>
+<a href=/tags/fpga class=block role=button>fpga</a>
 </div>
 </div>
 </div>
