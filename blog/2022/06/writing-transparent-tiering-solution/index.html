@@ -541,14 +541,14 @@ e.g. with LD_PRELOAD - more on that in the next section.</p>
 <p>In the case of user space solution, another decision needs to be made. Will it
 be run in the same address space as the tiered application?</p>
 <p>Running tiering in the same address space can be achieved by using the
-LD_PRELOAD functionality and by overloading the default <code>malloc</code>
-or mmap to add tracking of used addresses. This comes with the
+LD_PRELOAD functionality and by overloading the default <code>malloc()</code>
+or <code>mmap()</code> to add tracking of used addresses. This comes with the
 additional profit of having fine-grained access to the data and enables
 treating different mallocs differently, e.g. by grouping allocations by size,
 time of allocation, place in code, etc. The developer still has to decide,
 what kind of function calls they want to hijack - do they want to provide
 memory allocation themselves by handling <code>malloc()</code> and <code>free()</code>,
-or is <code>mmap</code> enough for their required functionalities?</p>
+or is <code>mmap()</code> enough for their required functionalities?</p>
 <p><img src=/images/posts/tiering_ld_preload_vs_daemon.png alt="daemon vs ld_preload" title="Illustration of page movement - daemon vs LD_PRELOAD"></p>
 <p>Another solution would be to run a separate process with superuser privilege,
 which checks mapped regions of other programs. This comes with the perk
