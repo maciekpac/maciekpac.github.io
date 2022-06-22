@@ -1,7 +1,7 @@
 <!doctype html><html dir=ltr lang=en-us><head>
 <link rel=stylesheet type=text/css href=/css/style.css>
 <meta property="og:title" content="librpma | PMDK">
-<meta property="og:description" content="librpma.7 rpma_atomic_write.3 rpma_conn_apply_remote_peer_cfg.3 rpma_conn_cfg_delete.3 rpma_conn_cfg_get_cq_size.3 rpma_conn_cfg_get_rcq_size.3 rpma_conn_cfg_get_rq_size.3 rpma_conn_cfg_get_sq_size.3 rpma_conn_cfg_get_timeout.3 rpma_conn_cfg_new.3 rpma_conn_cfg_set_cq_size.3 rpma_conn_cfg_set_rcq_size.3 rpma_conn_cfg_set_rq_size.3 rpma_conn_cfg_set_sq_size.3 rpma_conn_cfg_set_timeout.3 rpma_conn_delete.3 rpma_conn_disconnect.3 rpma_conn_get_cq.3 rpma_conn_get_event_fd.3 rpma_conn_get_private_data.3 rpma_conn_get_qp_num.3 rpma_conn_get_rcq.3 rpma_conn_next_event.3 rpma_conn_req_connect.3 rpma_conn_req_delete.3 rpma_conn_req_get_private_data.3 rpma_conn_req_new.3 rpma_conn_req_recv.3 rpma_cq_get_fd.3 rpma_cq_get_wc.3 rpma_cq_wait.3 rpma_ep_get_fd.3 rpma_ep_listen.3 rpma_ep_next_conn_req.3 rpma_ep_shutdown.3 rpma_err_2str.3 rpma_flush.3 rpma_log_get_threshold.3 rpma_log_set_function.3 rpma_log_set_threshold.3 rpma_mr_advise.3 rpma_mr_dereg.3 rpma_mr_get_descriptor.3 rpma_mr_get_descriptor_size.3 rpma_mr_get_ptr.3 rpma_mr_get_size.3 rpma_mr_reg.3 rpma_mr_remote_delete.3 rpma_mr_remote_from_descriptor.3 rpma_mr_remote_get_flush_type.3 rpma_mr_remote_get_size.3 rpma_peer_cfg_delete.3 rpma_peer_cfg_from_descriptor.3 rpma_peer_cfg_get_descriptor.3 rpma_peer_cfg_get_descriptor_size.3 rpma_peer_cfg_get_direct_write_to_pmem.3 rpma_peer_cfg_new.3 rpma_peer_cfg_set_direct_write_to_pmem.3 rpma_peer_delete.3 rpma_peer_new.3 rpma_read.3 rpma_recv.3 rpma_send.3 rpma_send_with_imm.3 rpma_utils_conn_event_2str.3 rpma_utils_get_ibv_context.3 rpma_utils_ibv_context_is_odp_capable.3 rpma_write.3 rpma_write_atomic.3 rpma_write_with_imm.">
+<meta property="og:description" content="librpma.7 rpma_atomic_write.3 rpma_conn_apply_remote_peer_cfg.3 rpma_conn_cfg_delete.3 rpma_conn_cfg_get_compl_channel.3 rpma_conn_cfg_get_cq_size.3 rpma_conn_cfg_get_rcq_size.3 rpma_conn_cfg_get_rq_size.3 rpma_conn_cfg_get_sq_size.3 rpma_conn_cfg_get_timeout.3 rpma_conn_cfg_new.3 rpma_conn_cfg_set_compl_channel.3 rpma_conn_cfg_set_cq_size.3 rpma_conn_cfg_set_rcq_size.3 rpma_conn_cfg_set_rq_size.3 rpma_conn_cfg_set_sq_size.3 rpma_conn_cfg_set_timeout.3 rpma_conn_delete.3 rpma_conn_disconnect.3 rpma_conn_get_compl_fd.3 rpma_conn_get_cq.3 rpma_conn_get_event_fd.3 rpma_conn_get_private_data.3 rpma_conn_get_qp_num.3 rpma_conn_get_rcq.3 rpma_conn_next_event.3 rpma_conn_req_connect.3 rpma_conn_req_delete.3 rpma_conn_req_get_private_data.3 rpma_conn_req_new.3 rpma_conn_req_recv.3 rpma_conn_wait.3 rpma_cq_get_fd.3 rpma_cq_get_wc.3 rpma_cq_wait.3 rpma_ep_get_fd.3 rpma_ep_listen.3 rpma_ep_next_conn_req.3 rpma_ep_shutdown.3 rpma_err_2str.3 rpma_flush.3 rpma_log_get_threshold.3 rpma_log_set_function.3 rpma_log_set_threshold.3 rpma_mr_advise.3 rpma_mr_dereg.3 rpma_mr_get_descriptor.3 rpma_mr_get_descriptor_size.3 rpma_mr_get_ptr.3 rpma_mr_get_size.3 rpma_mr_reg.3 rpma_mr_remote_delete.3 rpma_mr_remote_from_descriptor.3 rpma_mr_remote_get_flush_type.3 rpma_mr_remote_get_size.3 rpma_peer_cfg_delete.3 rpma_peer_cfg_from_descriptor.3 rpma_peer_cfg_get_descriptor.3 rpma_peer_cfg_get_descriptor_size.3 rpma_peer_cfg_get_direct_write_to_pmem.3 rpma_peer_cfg_new.3 rpma_peer_cfg_set_direct_write_to_pmem.3 rpma_peer_delete.3 rpma_peer_new.3 rpma_read.3 rpma_recv.3 rpma_send.3 rpma_send_with_imm.3 rpma_utils_conn_event_2str.3 rpma_utils_get_ibv_context.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://pmem.io/rpma/manpages/master/librpma.7/"><meta property="article:section" content="rpma">
 <meta charset=utf-8>
@@ -287,7 +287,7 @@
 <section id=page-title class="page-title-parallax page-title-center page-title-dark include-header skrollable skrollable-between" style="background-image:url('');background-size:cover;padding:120px 0;margin-top:-157.05px">
 <div class="container clearfix mt-4">
 <div class="slider-title text-light">
-<h2 style=color:#fff>librpma API version 0.13.0</h2>
+<h2 style=color:#fff>librpma API version 0.14.0</h2>
 </div>
 </div>
 </section>
@@ -299,12 +299,14 @@
 <a href=../rpma_atomic_write.3.html>rpma_atomic_write.3</a>
 <a href=../rpma_conn_apply_remote_peer_cfg.3.html>rpma_conn_apply_remote_peer_cfg.3</a>
 <a href=../rpma_conn_cfg_delete.3.html>rpma_conn_cfg_delete.3</a>
+<a href=../rpma_conn_cfg_get_compl_channel.3.html>rpma_conn_cfg_get_compl_channel.3</a>
 <a href=../rpma_conn_cfg_get_cq_size.3.html>rpma_conn_cfg_get_cq_size.3</a>
 <a href=../rpma_conn_cfg_get_rcq_size.3.html>rpma_conn_cfg_get_rcq_size.3</a>
 <a href=../rpma_conn_cfg_get_rq_size.3.html>rpma_conn_cfg_get_rq_size.3</a>
 <a href=../rpma_conn_cfg_get_sq_size.3.html>rpma_conn_cfg_get_sq_size.3</a>
 <a href=../rpma_conn_cfg_get_timeout.3.html>rpma_conn_cfg_get_timeout.3</a>
 <a href=../rpma_conn_cfg_new.3.html>rpma_conn_cfg_new.3</a>
+<a href=../rpma_conn_cfg_set_compl_channel.3.html>rpma_conn_cfg_set_compl_channel.3</a>
 <a href=../rpma_conn_cfg_set_cq_size.3.html>rpma_conn_cfg_set_cq_size.3</a>
 <a href=../rpma_conn_cfg_set_rcq_size.3.html>rpma_conn_cfg_set_rcq_size.3</a>
 <a href=../rpma_conn_cfg_set_rq_size.3.html>rpma_conn_cfg_set_rq_size.3</a>
@@ -312,6 +314,7 @@
 <a href=../rpma_conn_cfg_set_timeout.3.html>rpma_conn_cfg_set_timeout.3</a>
 <a href=../rpma_conn_delete.3.html>rpma_conn_delete.3</a>
 <a href=../rpma_conn_disconnect.3.html>rpma_conn_disconnect.3</a>
+<a href=../rpma_conn_get_compl_fd.3.html>rpma_conn_get_compl_fd.3</a>
 <a href=../rpma_conn_get_cq.3.html>rpma_conn_get_cq.3</a>
 <a href=../rpma_conn_get_event_fd.3.html>rpma_conn_get_event_fd.3</a>
 <a href=../rpma_conn_get_private_data.3.html>rpma_conn_get_private_data.3</a>
@@ -323,6 +326,7 @@
 <a href=../rpma_conn_req_get_private_data.3.html>rpma_conn_req_get_private_data.3</a>
 <a href=../rpma_conn_req_new.3.html>rpma_conn_req_new.3</a>
 <a href=../rpma_conn_req_recv.3.html>rpma_conn_req_recv.3</a>
+<a href=../rpma_conn_wait.3.html>rpma_conn_wait.3</a>
 <a href=../rpma_cq_get_fd.3.html>rpma_cq_get_fd.3</a>
 <a href=../rpma_cq_get_wc.3.html>rpma_cq_get_wc.3</a>
 <a href=../rpma_cq_wait.3.html>rpma_cq_wait.3</a>
@@ -363,7 +367,6 @@
 <a href=../rpma_utils_get_ibv_context.3.html>rpma_utils_get_ibv_context.3</a>
 <a href=../rpma_utils_ibv_context_is_odp_capable.3.html>rpma_utils_ibv_context_is_odp_capable.3</a>
 <a href=../rpma_write.3.html>rpma_write.3</a>
-<a href=../rpma_write_atomic.3.html>rpma_write_atomic.3</a>
 <a href=../rpma_write_with_imm.3.html>rpma_write_with_imm.3</a>
 </br></br>
 <h1 id=name>NAME</h1>
@@ -393,10 +396,10 @@ memory to the local memory,</p>
 memory to the remote memory),</p>
 </li>
 <li>
-<p><strong>rpma_write_atomic</strong>() - works like <strong>rpma_write</strong>(), but it
+<p><strong>rpma_atomic_write</strong>() - works like <strong>rpma_write</strong>(), but it
 allows transferring 8 bytes of data (RPMA_ATOMIC_WRITE_ALIGNMENT)
 and storing them atomically in the remote memory (see
-<strong>rpma_write_atomic</strong>(3) for details and restrictions), and:</p>
+<strong>rpma_atomic_write</strong>(3) for details and restrictions), and:</p>
 </li>
 <li>
 <p><strong>rpma_flush</strong>() - initiates finalizing a transfer of data to the
@@ -764,94 +767,10 @@ separately for each of the connections:</p>
 either <strong>rpma_conn_req_new</strong>() or <strong>rpma_ep_next_conn_req</strong>() for
 the settings to take effect.</p>
 <h1 id=thread-safety>THREAD SAFETY</h1>
-<p>Most of the core librpma API calls are thread-safe but there are also
-very important exceptions mainly related to connection's configuration,
-establishment and tear-down. Here you can find a complete list of NOT
-thread-safe API calls:</p>
-<ul>
-<li>
-<p><strong>rpma_conn_apply_remote_peer_cfg</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_cfg_get_cq_size</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_cfg_get_rq_size</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_cfg_get_sq_size</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_cfg_get_timeout</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_cfg_set_cq_size</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_cfg_set_rq_size</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_cfg_set_sq_size</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_cfg_set_timeout</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_delete</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_disconnect</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_get_private_data</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_next_event</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_req_connect</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_req_delete</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_req_get_private_data</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_conn_req_new</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_ep_listen</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_ep_next_conn_req</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_ep_shutdown</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_peer_cfg_get_descriptor</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_peer_cfg_get_descriptor_size</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_peer_cfg_get_direct_write_to_pmem</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_peer_cfg_set_direct_write_to_pmem</strong>()</p>
-</li>
-<li>
-<p><strong>rpma_utils_get_ibv_context</strong>()</p>
-</li>
-</ul>
-<p>Other librpma API calls are thread-safe. However, creating RPMA library
-resources usually involves dynamic memory allocation and destroying
-resources usually involves a dynamic memory release. The same resource
-cannot be destroyed more than once, at any thread, and a resource cannot
-be used after it was destroyed. It is the user's responsibility to
-follow those rules and not doing so may result in a segmentation fault
-or undefined behaviour.</p>
+<p>The analysis of thread safety of the librpma library is described in
+details in the THREAD_SAFETY.md file:</p>
+<pre><code>        https://github.com/pmem/rpma/blob/master/THREAD_SAFETY.md
+</code></pre>
 <h1 id=on-demand-paging-support>ON-DEMAND PAGING SUPPORT</h1>
 <p>On-Demand-Paging (ODP) is a technique that simplifies the memory
 registration process (for example, applications no longer need to pin

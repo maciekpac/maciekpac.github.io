@@ -1,8 +1,7 @@
 <!doctype html><html dir=ltr lang=en-us><head>
 <link rel=stylesheet type=text/css href=/css/style.css>
 <meta property="og:title" content="libpmem2 | PMDK">
-<meta property="og:description" content="comment: <> (SPDX-License-Identifier: BSD-3-Clause comment: <> (Copyright 2019-2021, Intel Corporation)
-NAME
+<meta property="og:description" content="NAME
 SYNOPSIS
 DESCRIPTION
 GRANULARITY
@@ -13,7 +12,7 @@ EXAMPLE
 ACKNOWLEDGEMENTS
 SEE ALSO
 NAME libpmem2 - persistent memory support library
-SYNOPSIS #include <libpmem2.h>cc ... -lpmem2 DESCRIPTION libpmem2 provides low-level persistent memory (pmem) support for applications using direct access storage (DAX), which is storage that supports load/store access without paging blocks from a block storage device. Some types of non-volatile memory DIMMs (NVDIMMs) provide this type of byte addressable access to storage.">
+SYNOPSIS #include <libpmem2.h>cc ... -lpmem2 DESCRIPTION libpmem2 provides low-level persistent memory (pmem) support for applications using direct access storage (DAX), which is storage that supports load/store access without paging blocks from a block storage device. Some types of non-volatile memory DIMMs (NVDIMMs) provide this type of byte addressable access to storage. A persistent memory aware file system is typically used to expose the direct access to applications.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://pmem.io/pmdk/manpages/windows/master/libpmem2/libpmem2.7/"><meta property="article:section" content="pmdk">
 <meta charset=utf-8>
@@ -304,11 +303,478 @@ SYNOPSIS #include <libpmem2.h>cc ... -lpmem2 DESCRIPTION libpmem2 provides low-l
 </div>
 </section>
 <div class="section m-0 bg-transparent library-section dark-mode">
+<div id=manpage_shortcut>
+<ul>
+<li class=sys_header>LINUX</li>
+<li class=release_tag><input id=toggle_linux_master type=checkbox><label for=toggle_linux_master>libpmem2 master</label>
+<ul>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/libpmem2_unsafe_shutdown.7>libpmem2_unsafe_shutdown</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/libpmem2.7.html>libpmem2</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_async.3>pmem2_async</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_badblock_clear.3>pmem2_badblock_clear</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_badblock_context_new.3>pmem2_badblock_context_new</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_badblock_next.3>pmem2_badblock_next</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_config_new.3>pmem2_config_new</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_config_set_length.3>pmem2_config_set_length</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_config_set_offset.3>pmem2_config_set_offset</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_config_set_protection.3>pmem2_config_set_protection</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_config_set_required_store_granularity.3>pmem2_config_set_required_store_granularity</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_config_set_sharing.3>pmem2_config_set_sharing</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_config_set_vm_reservation.3>pmem2_config_set_vm_reservation</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_deep_flush.3>pmem2_deep_flush</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_errormsg.3>pmem2_errormsg</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_get_drain_fn.3>pmem2_get_drain_fn</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_get_flush_fn.3>pmem2_get_flush_fn</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memmove_fn</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_get_persist_fn.3>pmem2_get_persist_fn</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_map_delete.3>pmem2_map_delete</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_map_from_existing.3>pmem2_map_from_existing</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_map_get_address.3>pmem2_map_get_address</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_map_get_size.3>pmem2_map_get_size</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_map_get_store_granularity.3>pmem2_map_get_store_granularity</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_map_new.3>pmem2_map_new</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_perror.3>pmem2_perror</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_source_alignment.3>pmem2_source_alignment</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_source_device_id.3>pmem2_source_device_id</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_source_device_usc.3>pmem2_source_device_usc</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_source_from_anon.3>pmem2_source_from_anon</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_source_from_fd.3>pmem2_source_from_fd</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_source_get_fd.3>pmem2_source_get_fd</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_source_get_handle.3>pmem2_source_get_handle</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_source_numa_node.3>pmem2_source_numa_node</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_source_pread_mcsafe.3>pmem2_source_pread_mcsafe</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_source_size.3>pmem2_source_size</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_vm_reservation_extend.3>pmem2_vm_reservation_extend</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_vm_reservation_get_address.3>pmem2_vm_reservation_get_address</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_vm_reservation_get_size.3>pmem2_vm_reservation_get_size</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_vm_reservation_map_find.3>pmem2_vm_reservation_map_find</a></li>
+<li><a href=/pmdk/manpages/linux/master/libpmem2/pmem2_vm_reservation_new.3>pmem2_vm_reservation_new</a></li>
+</ul>
+</li>
+<li class=release_tag><input id=toggle_linux_1.12 type=checkbox><label for=toggle_linux_1.12>libpmem2 version 1.12</label>
+<ul>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/libpmem2_unsafe_shutdown.7>libpmem2_unsafe_shutdown</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/libpmem2.7.html>libpmem2</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_async.3>pmem2_async</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_badblock_clear.3>pmem2_badblock_clear</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_badblock_context_new.3>pmem2_badblock_context_new</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_badblock_next.3>pmem2_badblock_next</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_config_new.3>pmem2_config_new</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_config_set_length.3>pmem2_config_set_length</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_config_set_offset.3>pmem2_config_set_offset</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_config_set_protection.3>pmem2_config_set_protection</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_config_set_required_store_granularity.3>pmem2_config_set_required_store_granularity</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_config_set_sharing.3>pmem2_config_set_sharing</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_config_set_vm_reservation.3>pmem2_config_set_vm_reservation</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_deep_flush.3>pmem2_deep_flush</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_errormsg.3>pmem2_errormsg</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_get_drain_fn.3>pmem2_get_drain_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_get_flush_fn.3>pmem2_get_flush_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memmove_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_get_persist_fn.3>pmem2_get_persist_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_map_delete.3>pmem2_map_delete</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_map_from_existing.3>pmem2_map_from_existing</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_map_get_address.3>pmem2_map_get_address</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_map_get_size.3>pmem2_map_get_size</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_map_get_store_granularity.3>pmem2_map_get_store_granularity</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_map_new.3>pmem2_map_new</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_perror.3>pmem2_perror</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_source_alignment.3>pmem2_source_alignment</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_source_device_id.3>pmem2_source_device_id</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_source_device_usc.3>pmem2_source_device_usc</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_source_from_anon.3>pmem2_source_from_anon</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_source_from_fd.3>pmem2_source_from_fd</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_source_get_fd.3>pmem2_source_get_fd</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_source_get_handle.3>pmem2_source_get_handle</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_source_numa_node.3>pmem2_source_numa_node</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_source_pread_mcsafe.3>pmem2_source_pread_mcsafe</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_source_size.3>pmem2_source_size</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_vm_reservation_extend.3>pmem2_vm_reservation_extend</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_vm_reservation_get_address.3>pmem2_vm_reservation_get_address</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_vm_reservation_get_size.3>pmem2_vm_reservation_get_size</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_vm_reservation_map_find.3>pmem2_vm_reservation_map_find</a></li>
+<li><a href=/pmdk/manpages/linux/v1.12/libpmem2/pmem2_vm_reservation_new.3>pmem2_vm_reservation_new</a></li>
+</ul>
+</li>
+<li class=release_tag><input id=toggle_linux_1.11 type=checkbox><label for=toggle_linux_1.11>libpmem2 version 1.11</label>
+<ul>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/libpmem2_unsafe_shutdown.7>libpmem2_unsafe_shutdown</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/libpmem2.7.html>libpmem2</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_badblock_clear.3>pmem2_badblock_clear</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_badblock_context_new.3>pmem2_badblock_context_new</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_badblock_next.3>pmem2_badblock_next</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_config_new.3>pmem2_config_new</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_config_set_length.3>pmem2_config_set_length</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_config_set_offset.3>pmem2_config_set_offset</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_config_set_protection.3>pmem2_config_set_protection</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_config_set_required_store_granularity.3>pmem2_config_set_required_store_granularity</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_config_set_sharing.3>pmem2_config_set_sharing</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_config_set_vm_reservation.3>pmem2_config_set_vm_reservation</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_deep_flush.3>pmem2_deep_flush</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_errormsg.3>pmem2_errormsg</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_get_drain_fn.3>pmem2_get_drain_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_get_flush_fn.3>pmem2_get_flush_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memmove_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_get_persist_fn.3>pmem2_get_persist_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_map_delete.3>pmem2_map_delete</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_map_from_existing.3>pmem2_map_from_existing</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_map_get_address.3>pmem2_map_get_address</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_map_get_size.3>pmem2_map_get_size</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_map_get_store_granularity.3>pmem2_map_get_store_granularity</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_map_new.3>pmem2_map_new</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_perror.3>pmem2_perror</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_source_alignment.3>pmem2_source_alignment</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_source_device_id.3>pmem2_source_device_id</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_source_device_usc.3>pmem2_source_device_usc</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_source_from_anon.3>pmem2_source_from_anon</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_source_from_fd.3>pmem2_source_from_fd</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_source_get_fd.3>pmem2_source_get_fd</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_source_get_handle.3>pmem2_source_get_handle</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_source_numa_node.3>pmem2_source_numa_node</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_source_size.3>pmem2_source_size</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_vm_reservation_extend.3>pmem2_vm_reservation_extend</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_vm_reservation_get_address.3>pmem2_vm_reservation_get_address</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_vm_reservation_get_size.3>pmem2_vm_reservation_get_size</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_vm_reservation_map_find.3>pmem2_vm_reservation_map_find</a></li>
+<li><a href=/pmdk/manpages/linux/v1.11/libpmem2/pmem2_vm_reservation_new.3>pmem2_vm_reservation_new</a></li>
+</ul>
+</li>
+<li class=release_tag><input id=toggle_linux_1.10 type=checkbox><label for=toggle_linux_1.10>libpmem2 version 1.10</label>
+<ul>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/libpmem2_unsafe_shutdown.7>libpmem2_unsafe_shutdown</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/libpmem2.7.html>libpmem2</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_badblock_clear.3>pmem2_badblock_clear</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_badblock_context_new.3>pmem2_badblock_context_new</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_badblock_next.3>pmem2_badblock_next</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_config_new.3>pmem2_config_new</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_config_set_length.3>pmem2_config_set_length</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_config_set_offset.3>pmem2_config_set_offset</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_config_set_protection.3>pmem2_config_set_protection</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_config_set_required_store_granularity.3>pmem2_config_set_required_store_granularity</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_config_set_sharing.3>pmem2_config_set_sharing</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_config_set_vm_reservation.3>pmem2_config_set_vm_reservation</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_deep_flush.3>pmem2_deep_flush</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_errormsg.3>pmem2_errormsg</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_get_drain_fn.3>pmem2_get_drain_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_get_flush_fn.3>pmem2_get_flush_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memmove_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_get_persist_fn.3>pmem2_get_persist_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_map_delete.3>pmem2_map_delete</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_map_from_existing.3>pmem2_map_from_existing</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_map_get_address.3>pmem2_map_get_address</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_map_get_size.3>pmem2_map_get_size</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_map_get_store_granularity.3>pmem2_map_get_store_granularity</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_map_new.3>pmem2_map_new</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_perror.3>pmem2_perror</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_source_alignment.3>pmem2_source_alignment</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_source_device_id.3>pmem2_source_device_id</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_source_device_usc.3>pmem2_source_device_usc</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_source_from_anon.3>pmem2_source_from_anon</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_source_from_fd.3>pmem2_source_from_fd</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_source_get_fd.3>pmem2_source_get_fd</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_source_get_handle.3>pmem2_source_get_handle</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_source_size.3>pmem2_source_size</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_vm_reservation_get_address.3>pmem2_vm_reservation_get_address</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_vm_reservation_get_size.3>pmem2_vm_reservation_get_size</a></li>
+<li><a href=/pmdk/manpages/linux/v1.10/libpmem2/pmem2_vm_reservation_new.3>pmem2_vm_reservation_new</a></li>
+</ul>
+</li>
+<li class=release_tag><input id=toggle_linux_1.9 type=checkbox><label for=toggle_linux_1.9>libpmem2 version 1.9</label>
+<ul>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/libpmem2_unsafe_shutdown.7>libpmem2_unsafe_shutdown</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/libpmem2.7.html>libpmem2</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_badblock_clear.3>pmem2_badblock_clear</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_badblock_context_new.3>pmem2_badblock_context_new</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_badblock_next.3>pmem2_badblock_next</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_config_new.3>pmem2_config_new</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_config_set_length.3>pmem2_config_set_length</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_config_set_offset.3>pmem2_config_set_offset</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_config_set_protection.3>pmem2_config_set_protection</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_config_set_required_store_granularity.3>pmem2_config_set_required_store_granularity</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_config_set_sharing.3>pmem2_config_set_sharing</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_config_set_vm_reservation.3>pmem2_config_set_vm_reservation</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_deep_flush.3>pmem2_deep_flush</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_errormsg.3>pmem2_errormsg</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_get_drain_fn.3>pmem2_get_drain_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_get_flush_fn.3>pmem2_get_flush_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memmove_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_get_persist_fn.3>pmem2_get_persist_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_map_get_address.3>pmem2_map_get_address</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_map_get_size.3>pmem2_map_get_size</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_map_get_store_granularity.3>pmem2_map_get_store_granularity</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_perror.3>pmem2_perror</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_source_alignment.3>pmem2_source_alignment</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_source_device_id.3>pmem2_source_device_id</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_source_device_usc.3>pmem2_source_device_usc</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_source_from_anon.3>pmem2_source_from_anon</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_source_from_fd.3>pmem2_source_from_fd</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_source_size.3>pmem2_source_size</a></li>
+<li><a href=/pmdk/manpages/linux/v1.9/libpmem2/pmem2_vm_reservation_new.3>pmem2_vm_reservation_new</a></li>
+</ul>
+</li>
+<li class=release_tag><input id=toggle_linux_1.8 type=checkbox><label for=toggle_linux_1.8>libpmem2 version 1.8</label>
+<ul>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/libpmem2_unsafe_shutdown.7>libpmem2_unsafe_shutdown</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/libpmem2.7.html>libpmem2</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_config_new.3>pmem2_config_new</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_config_new.3>pmem2_config_delete</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_config_set_offset.3>pmem2_config_set_offset</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_config_set_length.3>pmem2_config_set_length</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_config_set_sharing.3>pmem2_config_set_sharing</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_config_set_protection.3>pmem2_config_set_protection</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_config_set_required_store_granularity.3>pmem2_config_set_required_store_granularity</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_map_get_address.3>pmem2_map_get_address</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_map_get_size.3>pmem2_map_get_size</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_map_get_store_granularity.3>pmem2_map_get_store_granularity</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_get_persist_fn.3>pmem2_get_persist_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_get_flush_fn.3>pmem2_get_flush_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_get_drain_fn.3>pmem2_get_drain_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memmove_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memcpy_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memset_fn</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_badblock_next.3>pmem2_badblock_next</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_badblock_clear.3>pmem2_badblock_clear</a></li>
+<li><a href=/pmdk/manpages/linux/v1.8/libpmem2/pmem2_errormsg.3>pmem2_errormsg</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class=sys_header>WINDOWS</li>
+<li class=release_tag><input id=toggle_windows_master type=checkbox><label for=toggle_windows_master>libpmem2 master</label>
+<ul>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/libpmem2_unsafe_shutdown.7>libpmem2_unsafe_shutdown</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/libpmem2.7.html>libpmem2</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_async.3>pmem2_async</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_badblock_clear.3>pmem2_badblock_clear</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_badblock_context_new.3>pmem2_badblock_context_new</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_badblock_next.3>pmem2_badblock_next</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_config_new.3>pmem2_config_new</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_config_set_length.3>pmem2_config_set_length</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_config_set_offset.3>pmem2_config_set_offset</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_config_set_protection.3>pmem2_config_set_protection</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_config_set_required_store_granularity.3>pmem2_config_set_required_store_granularity</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_config_set_sharing.3>pmem2_config_set_sharing</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_config_set_vm_reservation.3>pmem2_config_set_vm_reservation</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_deep_flush.3>pmem2_deep_flush</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_errormsg.3>pmem2_errormsg</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_get_drain_fn.3>pmem2_get_drain_fn</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_get_flush_fn.3>pmem2_get_flush_fn</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memmove_fn</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_get_persist_fn.3>pmem2_get_persist_fn</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_map_delete.3>pmem2_map_delete</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_map_from_existing.3>pmem2_map_from_existing</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_map_get_address.3>pmem2_map_get_address</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_map_get_size.3>pmem2_map_get_size</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_map_get_store_granularity.3>pmem2_map_get_store_granularity</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_map_new.3>pmem2_map_new</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_perror.3>pmem2_perror</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_source_alignment.3>pmem2_source_alignment</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_source_device_id.3>pmem2_source_device_id</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_source_device_usc.3>pmem2_source_device_usc</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_source_from_anon.3>pmem2_source_from_anon</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_source_from_fd.3>pmem2_source_from_fd</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_source_get_fd.3>pmem2_source_get_fd</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_source_get_handle.3>pmem2_source_get_handle</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_source_numa_node.3>pmem2_source_numa_node</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_source_pread_mcsafe.3>pmem2_source_pread_mcsafe</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_source_size.3>pmem2_source_size</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_vm_reservation_extend.3>pmem2_vm_reservation_extend</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_vm_reservation_get_address.3>pmem2_vm_reservation_get_address</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_vm_reservation_get_size.3>pmem2_vm_reservation_get_size</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_vm_reservation_map_find.3>pmem2_vm_reservation_map_find</a></li>
+<li><a href=/pmdk/manpages/windows/master/libpmem2/pmem2_vm_reservation_new.3>pmem2_vm_reservation_new</a></li>
+</ul>
+</li>
+<li class=release_tag><input id=toggle_windows_1.12 type=checkbox><label for=toggle_windows_1.12>libpmem2 version 1.12</label>
+<ul>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/libpmem2_unsafe_shutdown.7>libpmem2_unsafe_shutdown</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/libpmem2.7.html>libpmem2</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_async.3>pmem2_async</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_badblock_clear.3>pmem2_badblock_clear</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_badblock_context_new.3>pmem2_badblock_context_new</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_badblock_next.3>pmem2_badblock_next</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_config_new.3>pmem2_config_new</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_config_set_length.3>pmem2_config_set_length</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_config_set_offset.3>pmem2_config_set_offset</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_config_set_protection.3>pmem2_config_set_protection</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_config_set_required_store_granularity.3>pmem2_config_set_required_store_granularity</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_config_set_sharing.3>pmem2_config_set_sharing</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_config_set_vm_reservation.3>pmem2_config_set_vm_reservation</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_deep_flush.3>pmem2_deep_flush</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_errormsg.3>pmem2_errormsg</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_get_drain_fn.3>pmem2_get_drain_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_get_flush_fn.3>pmem2_get_flush_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memmove_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_get_persist_fn.3>pmem2_get_persist_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_map_delete.3>pmem2_map_delete</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_map_from_existing.3>pmem2_map_from_existing</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_map_get_address.3>pmem2_map_get_address</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_map_get_size.3>pmem2_map_get_size</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_map_get_store_granularity.3>pmem2_map_get_store_granularity</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_map_new.3>pmem2_map_new</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_perror.3>pmem2_perror</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_source_alignment.3>pmem2_source_alignment</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_source_device_id.3>pmem2_source_device_id</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_source_device_usc.3>pmem2_source_device_usc</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_source_from_anon.3>pmem2_source_from_anon</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_source_from_fd.3>pmem2_source_from_fd</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_source_get_fd.3>pmem2_source_get_fd</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_source_get_handle.3>pmem2_source_get_handle</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_source_numa_node.3>pmem2_source_numa_node</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_source_pread_mcsafe.3>pmem2_source_pread_mcsafe</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_source_size.3>pmem2_source_size</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_vm_reservation_extend.3>pmem2_vm_reservation_extend</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_vm_reservation_get_address.3>pmem2_vm_reservation_get_address</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_vm_reservation_get_size.3>pmem2_vm_reservation_get_size</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_vm_reservation_map_find.3>pmem2_vm_reservation_map_find</a></li>
+<li><a href=/pmdk/manpages/windows/v1.12/libpmem2/pmem2_vm_reservation_new.3>pmem2_vm_reservation_new</a></li>
+</ul>
+</li>
+<li class=release_tag><input id=toggle_windows_1.11 type=checkbox><label for=toggle_windows_1.11>libpmem2 version 1.11</label>
+<ul>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/libpmem2_unsafe_shutdown.7>libpmem2_unsafe_shutdown</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/libpmem2.7.html>libpmem2</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_badblock_clear.3>pmem2_badblock_clear</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_badblock_context_new.3>pmem2_badblock_context_new</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_badblock_next.3>pmem2_badblock_next</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_config_new.3>pmem2_config_new</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_config_set_length.3>pmem2_config_set_length</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_config_set_offset.3>pmem2_config_set_offset</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_config_set_protection.3>pmem2_config_set_protection</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_config_set_required_store_granularity.3>pmem2_config_set_required_store_granularity</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_config_set_sharing.3>pmem2_config_set_sharing</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_config_set_vm_reservation.3>pmem2_config_set_vm_reservation</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_deep_flush.3>pmem2_deep_flush</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_errormsg.3>pmem2_errormsg</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_get_drain_fn.3>pmem2_get_drain_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_get_flush_fn.3>pmem2_get_flush_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memmove_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_get_persist_fn.3>pmem2_get_persist_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_map_delete.3>pmem2_map_delete</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_map_from_existing.3>pmem2_map_from_existing</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_map_get_address.3>pmem2_map_get_address</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_map_get_size.3>pmem2_map_get_size</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_map_get_store_granularity.3>pmem2_map_get_store_granularity</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_map_new.3>pmem2_map_new</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_perror.3>pmem2_perror</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_source_alignment.3>pmem2_source_alignment</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_source_device_id.3>pmem2_source_device_id</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_source_device_usc.3>pmem2_source_device_usc</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_source_from_anon.3>pmem2_source_from_anon</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_source_from_fd.3>pmem2_source_from_fd</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_source_get_fd.3>pmem2_source_get_fd</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_source_get_handle.3>pmem2_source_get_handle</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_source_numa_node.3>pmem2_source_numa_node</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_source_size.3>pmem2_source_size</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_vm_reservation_extend.3>pmem2_vm_reservation_extend</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_vm_reservation_get_address.3>pmem2_vm_reservation_get_address</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_vm_reservation_get_size.3>pmem2_vm_reservation_get_size</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_vm_reservation_map_find.3>pmem2_vm_reservation_map_find</a></li>
+<li><a href=/pmdk/manpages/windows/v1.11/libpmem2/pmem2_vm_reservation_new.3>pmem2_vm_reservation_new</a></li>
+</ul>
+</li>
+<li class=release_tag><input id=toggle_windows_1.10 type=checkbox><label for=toggle_windows_1.10>libpmem2 version 1.10</label>
+<ul>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/libpmem2_unsafe_shutdown.7>libpmem2_unsafe_shutdown</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/libpmem2.7.html>libpmem2</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_badblock_clear.3>pmem2_badblock_clear</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_badblock_context_new.3>pmem2_badblock_context_new</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_badblock_next.3>pmem2_badblock_next</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_config_new.3>pmem2_config_new</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_config_set_length.3>pmem2_config_set_length</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_config_set_offset.3>pmem2_config_set_offset</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_config_set_protection.3>pmem2_config_set_protection</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_config_set_required_store_granularity.3>pmem2_config_set_required_store_granularity</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_config_set_sharing.3>pmem2_config_set_sharing</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_config_set_vm_reservation.3>pmem2_config_set_vm_reservation</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_deep_flush.3>pmem2_deep_flush</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_errormsg.3>pmem2_errormsg</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_get_drain_fn.3>pmem2_get_drain_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_get_flush_fn.3>pmem2_get_flush_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memmove_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_get_persist_fn.3>pmem2_get_persist_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_map_delete.3>pmem2_map_delete</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_map_from_existing.3>pmem2_map_from_existing</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_map_get_address.3>pmem2_map_get_address</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_map_get_size.3>pmem2_map_get_size</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_map_get_store_granularity.3>pmem2_map_get_store_granularity</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_map_new.3>pmem2_map_new</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_perror.3>pmem2_perror</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_source_alignment.3>pmem2_source_alignment</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_source_device_id.3>pmem2_source_device_id</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_source_device_usc.3>pmem2_source_device_usc</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_source_from_anon.3>pmem2_source_from_anon</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_source_from_fd.3>pmem2_source_from_fd</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_source_get_fd.3>pmem2_source_get_fd</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_source_get_handle.3>pmem2_source_get_handle</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_source_size.3>pmem2_source_size</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_vm_reservation_get_address.3>pmem2_vm_reservation_get_address</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_vm_reservation_get_size.3>pmem2_vm_reservation_get_size</a></li>
+<li><a href=/pmdk/manpages/windows/v1.10/libpmem2/pmem2_vm_reservation_new.3>pmem2_vm_reservation_new</a></li>
+</ul>
+</li>
+<li class=release_tag><input id=toggle_windows_1.9 type=checkbox><label for=toggle_windows_1.9>libpmem2 version 1.9</label>
+<ul>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/libpmem2_unsafe_shutdown.7>libpmem2_unsafe_shutdown</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/libpmem2.7.html>libpmem2</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_badblock_clear.3>pmem2_badblock_clear</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_badblock_context_new.3>pmem2_badblock_context_new</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_badblock_next.3>pmem2_badblock_next</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_config_new.3>pmem2_config_new</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_config_set_length.3>pmem2_config_set_length</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_config_set_offset.3>pmem2_config_set_offset</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_config_set_protection.3>pmem2_config_set_protection</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_config_set_required_store_granularity.3>pmem2_config_set_required_store_granularity</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_config_set_sharing.3>pmem2_config_set_sharing</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_config_set_vm_reservation.3>pmem2_config_set_vm_reservation</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_deep_flush.3>pmem2_deep_flush</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_errormsg.3>pmem2_errormsg</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_get_drain_fn.3>pmem2_get_drain_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_get_flush_fn.3>pmem2_get_flush_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memmove_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_get_persist_fn.3>pmem2_get_persist_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_map_get_address.3>pmem2_map_get_address</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_map_get_size.3>pmem2_map_get_size</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_map_get_store_granularity.3>pmem2_map_get_store_granularity</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_perror.3>pmem2_perror</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_source_alignment.3>pmem2_source_alignment</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_source_device_id.3>pmem2_source_device_id</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_source_device_usc.3>pmem2_source_device_usc</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_source_from_anon.3>pmem2_source_from_anon</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_source_from_fd.3>pmem2_source_from_fd</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_source_size.3>pmem2_source_size</a></li>
+<li><a href=/pmdk/manpages/windows/v1.9/libpmem2/pmem2_vm_reservation_new.3>pmem2_vm_reservation_new</a></li>
+</ul>
+</li>
+<li class=release_tag><input id=toggle_windows_1.8 type=checkbox><label for=toggle_windows_1.8>libpmem2 version 1.8</label>
+<ul>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/libpmem2_unsafe_shutdown.7>libpmem2_unsafe_shutdown</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/libpmem2.7.html>libpmem2</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_config_new.3>pmem2_config_new</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_config_new.3>pmem2_config_delete</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_config_set_offset.3>pmem2_config_set_offset</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_config_set_length.3>pmem2_config_set_length</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_config_set_sharing.3>pmem2_config_set_sharing</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_config_set_protection.3>pmem2_config_set_protection</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_config_set_required_store_granularity.3>pmem2_config_set_required_store_granularity</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_map_get_address.3>pmem2_map_get_address</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_map_get_size.3>pmem2_map_get_size</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_map_get_store_granularity.3>pmem2_map_get_store_granularity</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_get_persist_fn.3>pmem2_get_persist_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_get_flush_fn.3>pmem2_get_flush_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_get_drain_fn.3>pmem2_get_drain_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memmove_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memcpy_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_get_memmove_fn.3>pmem2_get_memset_fn</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_badblock_next.3>pmem2_badblock_next</a></li>
+<li><a href=/pmdk/manpages/windows/v1.8/libpmem2/pmem2_badblock_clear.3>pmem2_badblock_clear</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div class=container>
 <div class="row justify-content-between">
 <div class="col mt-0 lib-content">
-<p><a href title="libpmem2.7 -- man page for libpmem2">comment</a>: &lt;> (SPDX-License-Identifier: BSD-3-Clause
-<a href title="libpmem2.7 -- man page for libpmem2">comment</a>: &lt;> (Copyright 2019-2021, Intel Corporation)</p>
 <p><a href=#name>NAME</a><br>
 <a href=#synopsis>SYNOPSIS</a><br>
 <a href=#description>DESCRIPTION</a><br>
@@ -400,7 +866,7 @@ state handling.</p>
 <p>To handle unsafe shutdown in the application, the following functions are provided:
 <strong>pmem2_source_device_id</strong>(3), <strong>pmem2_source_device_usc</strong>(3).
 More detailed information about unsafe shutdown detection and unsafe shutdown count
-and can be found in the <strong>libpmem2_unsafe_shutdown</strong>(7) man page.</p>
+can be found in the <strong>libpmem2_unsafe_shutdown</strong>(7) man page.</p>
 <h1 id=granularity>GRANULARITY</h1>
 <p>The <strong>libpmem2</strong> library introduces the concept of granularity through which you
 may easily distinguish between different levels of storage performance
@@ -432,14 +898,14 @@ the platform itself guarantees the persistence of data. But barriers might
 still be required for ordering.</p>
 <p>The library declares these granularity level in <em>pmem2_granularity</em> enum, which
 the application must set in <em>pmem2_config</em> to the appropriate level for
-a mapping a succeed. The software should set this config parameter to a value
+a mapping to succeed. The software should set this config parameter to a value
 that most accurately represents the target hardware characteristics and
 the storage patterns of the application. For example, a database storage engine
 that operates on large logical pages that reside either on SSDs or PMEM should
 set this value to <strong>PMEM2_GRANULARITY_PAGE</strong>.
 The library will create mappings where the new map granularity is lower or
 equal to the requested one. For example, a mapping with <strong>PMEM2_GRANULARITY_CACHE_LINE</strong>
-can created for the required granularity <strong>PMEM2_GRANULARITY_PAGE</strong>, but not
+can be created for the required granularity <strong>PMEM2_GRANULARITY_PAGE</strong>, but not
 vice versa.</p>
 <h1 id=caveats>CAVEATS</h1>
 <p><strong>libpmem2</strong> relies on the library destructor being called from the main thread. For this reason, all functions that might trigger destruction (e.g. dlclose(3)) should be called in the main thread. Otherwise some of the resources associated with that thread might not be cleaned up properly.</p>
