@@ -4,8 +4,8 @@
 <meta property="og:description" content="Writing custom transparent tiering solution - description of available options and trade-offs between them">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://pmem.io/blog/2022/06/memory-tiering-part-2-writing-transparent-tiering-solution/"><meta property="article:section" content="blog">
-<meta property="article:published_time" content="2022-06-22T00:00:00+02:00">
-<meta property="article:modified_time" content="2022-06-22T00:00:00+02:00">
+<meta property="article:published_time" content="2022-06-29T00:00:00+02:00">
+<meta property="article:modified_time" content="2022-06-29T00:00:00+02:00">
 <meta charset=utf-8>
 <link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
 <link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
@@ -298,7 +298,7 @@
 </div>
 <div class=entry-meta>
 <ul>
-<li><i class=icon-calendar3></i> 22 Jun, 2022</li>
+<li><i class=icon-calendar3></i> 29 Jun, 2022</li>
 <li><i class=icon-user></i> Maciej Paczocha</li>
 <li>
 <i class=icon-folder-open></i>
@@ -307,6 +307,7 @@ Memory Tiering
 </ul>
 </div>
 <div class="entry-content mt-0">
+<p>This is the second part of the series of articles about memory tiering. <a href=/blog/2022/06/memory-tiering-part-1/>The first one</a> explained what memory tiering is and why we need it, the second one will explain some mechanisms behind transparent tiering.</p>
 <p>This article is intended for those who would like to learn how tiering/numa
 balancing or memory profiling solutions work under the hood. We will focus
 on a high-level overview of how tiering/numa balancing could be designed,
@@ -317,7 +318,7 @@ API, hardware-accelerated performance monitoring or architecture of Linux apps.<
 <p>Before we delve into details, we will shortly discuss key requirements and
 map them to components of the software we want to design. The basis of
 a tiering system consists either of making a decision about the target tier
-in allocation time, or of monitoring which pages to move and moving them.</p>
+in allocation time or of monitoring which pages to move and moving them.</p>
 <p>A user might want to use features such as:</p>
 <ul>
 <li>per-application configuration,</li>
@@ -337,11 +338,11 @@ be implemented:</p>
 <li>decision-making,</li>
 <li>action: page movement or intelligent data placement.</li>
 </ul>
-<p>All of them can be implemented either in user space, using the libnuma library,
+<p>All of them can be implemented either in user space, using <a href=https://man7.org/linux/man-pages/man3/numa.3.html>libnuma</a>,
 or directly in kernel. We will explore some of the possible design decisions
 and how they affect the aforementioned functionalities.</p>
 <h3 id=options---user-space-vs-kernel-space>Options - user space vs kernel space</h3>
-<p>One of the first decisions to make is to decide on whether the solution should
+<p>One of the first decisions to make is to choose whether the solution should
 be located in user space or in kernel space. Kernel space might seem to be the
 obvious answer, as there are multiple reasons to do this, among others:</p>
 <ul>
@@ -357,9 +358,9 @@ obvious answer, as there are multiple reasons to do this, among others:</p>
 </ul>
 </li>
 <li>better integration with default kernel balancing possible,</li>
-<li>can use data structures from kernel, lower overhead:
+<li>availability of data structures from kernel, lower overhead:
 <ul>
-<li>no need to duplicate data between userspace and kernelspace in order to
+<li>no need to duplicate data between user space and kernel space in order to
 track the state of pages.</li>
 </ul>
 </li>
@@ -372,28 +373,36 @@ data of other processes,</li>
 the machine; a separate kernel module is not that easy to experiment
 with neither,</li>
 <li>portability: a user space solution should work with many different production
-systems, typically those who meet the minimum up-to-date criteria,</li>
+systems, typically those that meet the minimum up-to-date criteria,</li>
 <li>access to allocations - lower granularity than OS, which can only move pages.</li>
 </ul>
+<p>The last point might need some clarification - individual allocations cannot
+be moved between tiers, only pages can; however, individual allocations
+are done in user space, with only occassional <code>mmap()</code> being handled
+by the OS when the user space library (i.e. glibc, jemalloc, tcmalloc, mimalloc
+or any other allocator) runs out of memory. It means that kernel only knows
+about mappings; in the user space, individual calls to <code>malloc()</code>
+and <code>free()</code> can be hijacked and used for data placement, tier prediction
+or grouping similar data on the same pages, so that it works better
+with transparent data movement.</p>
 <p>As the reader might see, the answer to where to implement the solution is not
 obvious. There are solutions available and already deployed on production
 systems that handle
-<a href=https://documentation.suse.com/sles/15-SP1/html/SLES-all/cha-tuning-numactl.html>balancing in kernel</a>,
-and in user space, available and on different stages of development.</p>
+<a href=https://documentation.suse.com/sles/15-SP1/html/SLES-all/cha-tuning-numactl.html>balancing in kernel</a>, and in user space.</p>
 <p>There is also another question - can user and kernel space solutions work
-together? There are plenty of opportunities for that, e.g. objects of similar
+together? There are plenty of opportunities for that, e.g., objects of similar
 hotness might be placed on the same pages in user space, so that kernal can
 efficiently move data between different tiers. The placement can be done
-either in allocation time or in runtime, by merging partially-empty pages.
+either at allocation time or at runtime, by merging partially-empty pages.
 There is always a question of cost and of possible performance gain -
 performing any logic in <code>malloc()</code> can impact performance a lot, but so
 can misallocating the data to unsuitable tier.</p>
 <h4 id=handling-configuration>Handling configuration</h4>
 <p>It might seem to be a trivial thing to do, but the mechanism of configuring
 the application also requires some thought. In user space, a text config file
-or arguments passed via command line might be enough, but a kernel solution
+or arguments passed via command line might be enough. A kernel solution
 would require a more complicated config handling, either via additional system
-calls, or by a special file, e.g. writing to which would trigger
+calls or by a special file, e.g., writing to which would trigger
 re-configuration of tiering.</p>
 <p>A user space solution (or a user space component that handles communication
 with kernel) might even contain a full-scale TCP or CLI client, with an
@@ -444,9 +453,9 @@ the CPU is not stalled. Modern CPUs take advantage not only of multiple cores,
 but also of
 <a href=https://en.wikipedia.org/wiki/Instruction-level_parallelism>instruction-level parallelism</a>.
 <a href=https://en.wikipedia.org/wiki/Branch_predictor>Branch prediction</a> and
-<a href=https://en.wikipedia.org/wiki/Instruction_pipelining>instruction pipelineing</a>
+<a href=https://en.wikipedia.org/wiki/Instruction_pipelining>instruction pipelining</a>
 in general are other things that can sometimes affect performance of a system
-much more than memory bandwith or latency.</p>
+much more than memory bandwidth or latency.</p>
 <p>The great thing is that all these features are an integral part of modern CPUs
 and they all automagically work behind the scenes. Of course, a developer
 conscious of their existence can usually help the compiler optimize the code
@@ -461,13 +470,13 @@ that is stalled due to IO, instead of the one that is bottlenecked on the CPU.
 This metric can be combined with the cgroups interface to monitor particular
 processes or groups of processes;
 <a href=https://engineering.fb.com/2022/06/20/data-infrastructure/transparent-memory-offloading-more-memory-at-a-fraction-of-the-cost-and-power/>PSI has been successfully used for the purpose of memory offloading</a>.</p>
-<p>We can also monitor bandwith usage of given tiers to keep some specified
+<p>We can also monitor bandwidth usage of given tiers to keep some specified
 balance between them or use some other relevant
 <a href=https://en.wikipedia.org/wiki/Hardware_performance_counter>hardware performance counter</a>
-that noone else has ever imagined using for this purpose.</p>
+that no one else has ever imagined using for this purpose.</p>
 <p>Last but not least, the obvious one - memory usage. We can check how much
 memory is consumed by an application or a whole system and offload some of that
-capacity to lower tiers, e.g. by allocating new data directly in PMEM or by
+capacity to lower tiers, e.g., by allocating new data directly in PMEM or by
 proactively demoting the data. We can also use that information to keep some
 particular ratio between tiers, as this is done in Memkind, via STATIC_RATIO
 and DYNAMIC_THRESHOLD policies.</p>
@@ -475,19 +484,19 @@ and DYNAMIC_THRESHOLD policies.</p>
 <p>The most straight-forward way to decide which pages should be promoted or demoted
 would be to adapt some well-known caching algorithm, such as
 <a href=https://en.wikipedia.org/wiki/Cache_replacement_policies#Least_recently_used_(LRU)>LRU</a>.
-The algorithm can be adapted e.g. by keeping two LRU queues, one for active
-pages and the other one for inactive and by swapping the most recently used
+The algorithm can be adapted e.g., by keeping two LRU queues, one for active
+pages and the other one for inactive, and by swapping the most recently used
 page on PMEM with the least recently used on DRAM, when appropriate. This is
 the approach used by the Linux kernel.</p>
 <p>What is important is not really when the page was used for the last time, but
 when and how often it would be used in the future. The person who knows such
-thighs best is probably either the program developer, whom we cannot ask (per
+thinghs best is probably either the program developer, whom we cannot ask (per
 requirement - tiering was supposed to be transparent), or the end user. Even
 if we could convince the end user to give us some hint on when they will
 access their data, the server-side implementation of this feature in existing
 production systems would take a lot of time and resources. Let&rsquo;s just simplify
 this issue and assume that we do not know the next data access time.
-The only thing we can do is try to forcast the accesses. A measure of how often the data was accessed in the
+The only thing we can do is try to forecast the accesses. A measure of how often the data was accessed in the
 past is a good start. Maybe there was some pattern in the data usage?</p>
 <p>This part of the system is largely based on heuristics, so we will leave a
 more in-depth consideration to the user.</p>
@@ -495,11 +504,11 @@ more in-depth consideration to the user.</p>
 <p>Moving pages is a way to improve memory access performance when the allocation
 decision heuristic fails, is absent, or access pattern changes over time.</p>
 <p><img src=/images/posts/allocator_mm.png alt="Memory management - illustration" title="Illustration of memory management - dependencies between user space, kernel space and hardware"></p>
-<p>Page movement itself might boil down to a single function call, e.g. from the
-libnuma library, but there is also a question of what we really want to do.
+<p>Page movement itself might boil down to a single function call, e.g., from
+<a href=https://man7.org/linux/man-pages/man3/numa.3.html>libnuma</a>, but there is also a question of what we really want to do.
 Do we want to move the page, or assure it stays in the moved place forever? Or,
 maybe, we would like to specify which nodes are acceptable and which ones are
-not - this might be useful e.g. to pin page A to DRAM, page B to PMEM and
+not - this might be useful e.g., to pin page A to DRAM, page B to PMEM and
 page C to CXL, without specifying the particular nodes, and let the auto numa
 balance the data between nodes of the same memory type, but of different
 distance to the executing CPU.</p>
@@ -509,17 +518,17 @@ a chunk of memory adds additional
 <a href=https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/4759692f-43fb-4066-86b2-76a90f0707a2.xhtml>VMA</a>.
 Let&rsquo;s imagine a contiguous address space of 10 pages, which are entirely
 located in DRAM and share the same policy. At some point in time, the page
-number 3 is moved to PMEM using <code>mbind</code>. After the operation is executed,
+number 3 is moved to PMEM using <code>mbind()</code>. After the operation is executed,
 there would be 3 VMAs instead of one: the first one for pages 0-2, one
 for page 3 and the last one for pages 4-9. The number of VMAs can grow
 over time, which adds memory overhead. Another thing to bear in mind is that
 there is a per-process cap on the number of VMAs, accessible via
 <code>sysctl vm.max_map_count</code> - if this number is exceeded, a syscall that
-would create additional VMA, e.g. <code>mmap()</code> or <code>mbind()</code>, will fail.</p>
+would create additional VMA, e.g., <code>mmap()</code> or <code>mbind()</code>, will fail.</p>
 <p>Just a short recap - the policy can be changed from user space with
 <code>mbind()</code>; pages can be moved in user space without changing the policy
-using <code>numa_move_pages()</code>. Both functions are a part of the
-<a href=https://man7.org/linux/man-pages/man3/numa.3.html>libnuma</a> library.</p>
+using <code>numa_move_pages()</code>. Both functions are a part of
+<a href=https://man7.org/linux/man-pages/man3/numa.3.html>libnuma</a>.</p>
 <h4 id=intelligent-data-placement>Intelligent data placement</h4>
 <p>The most efficient way to perform tiering is to place the data in the correct
 tier from the very beginning. Unfortunately, a transparent tiering solution
@@ -528,7 +537,7 @@ do. Memkind&rsquo;s policies, STATIC_RATIO and DYNAMIC_THRESHOLD do just that - 
 monitor macro-statistics, such as per-tier memory usage or the size of
 allocations, and place the data in the appropriate tier. The greatest
 advantage of this solution is that there is no additional overhead caused by
-data movement in runtime.</p>
+data movement at runtime.</p>
 <p>As this is an article about writing your own solution, we can explore some
 other ideas: using allocation time, detecting some patterns
 in allocations or accesses&mldr; This is an open subject, but we have to remember
@@ -544,7 +553,7 @@ be run in the same address space as the tiered application?</p>
 LD_PRELOAD functionality and by overloading the default <code>malloc()</code>
 or <code>mmap()</code> to add tracking of used addresses. This comes with the
 additional profit of having fine-grained access to the data and enables
-treating different mallocs differently, e.g. by grouping allocations by size,
+treating different mallocs differently, e.g., by grouping allocations by size,
 time of allocation, place in code, etc. The developer still has to decide,
 what kind of function calls they want to hijack - do they want to provide
 memory allocation themselves by handling <code>malloc()</code> and <code>free()</code>,
@@ -560,7 +569,7 @@ even if the daemon crashes.</p>
 <p>In this case, the daemon has to query the OS to check the address space of each
 program that it wants to perform tiering on. The tiered process communicates
 with kernel the same way it would without any tiering; the tiering process only
-has access to the information that the OS exposes, e.g. via
+has access to the information that the OS exposes, e.g., via
 <code>/proc/&lt;pid>/maps</code>. As noted before, super user privilege is required
 to move pages of a different process.</p>
 <h2 id=summary>Summary</h2>
@@ -607,10 +616,9 @@ they have broadened their knowledge about Linux.</p>
 </div>
 <div class="row justify-content-between col-mb-30 post-navigation">
 <div class="col-12 col-md-auto text-center">
-<a href="https://pmem.io/blog/2022/06/memory-tiering-part-1/?ref=footer">&lArr; Memory Tiering (part 1)</a>
 </div>
 <div class="col-12 col-md-auto text-center">
-<a href="https://pmem.io/blog/2022/06/similarity-search-opportunity-for-pmem/?ref=footer">Similarity Search -... &rArr;</a>
+<a href="https://pmem.io/blog/2022/06/memory-tiering-part-1/?ref=footer">Memory Tiering (part 1) &rArr;</a>
 </div>
 </div>
 <div class=line></div>
