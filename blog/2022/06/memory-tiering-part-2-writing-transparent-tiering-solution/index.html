@@ -378,7 +378,7 @@ systems, typically those that meet the minimum up-to-date criteria,</li>
 </ul>
 <p>The last point might need some clarification - individual allocations cannot
 be moved between tiers, only pages can; however, individual allocations
-are done in user space, with only occassional <code>mmap()</code> being handled
+are done in user space, with only occasional <code>mmap()</code> being handled
 by the OS when the user space library (i.e. glibc, jemalloc, tcmalloc, mimalloc
 or any other allocator) runs out of memory. It means that kernel only knows
 about mappings; in the user space, individual calls to <code>malloc()</code>
@@ -490,7 +490,7 @@ page on PMEM with the least recently used on DRAM, when appropriate. This is
 the approach used by the Linux kernel.</p>
 <p>What is important is not really when the page was used for the last time, but
 when and how often it would be used in the future. The person who knows such
-thinghs best is probably either the program developer, whom we cannot ask (per
+things best is probably either the program developer, whom we cannot ask (per
 requirement - tiering was supposed to be transparent), or the end user. Even
 if we could convince the end user to give us some hint on when they will
 access their data, the server-side implementation of this feature in existing
